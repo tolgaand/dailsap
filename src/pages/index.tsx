@@ -1,7 +1,8 @@
+import { Collection } from "containers/Collection";
 import type { NextPage } from "next";
 
 const Home: NextPage = () => {
-  return <h1 className="text-sm">Hello World</h1>;
+  return <Collection />;
 };
 
 export default Home;
