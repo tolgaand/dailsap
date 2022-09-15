@@ -6,7 +6,7 @@ import {
   useMemo,
   useState,
 } from "react";
-import { DailsapClient } from "./DaisapClient";
+import { DailsapClient } from "./DailsapClient";
 import { useAnchorWallet, useConnection } from "@solana/wallet-adapter-react";
 import { useProgramId } from "hooks/useProgramId";
 import { Keypair, PublicKey, Transaction } from "@solana/web3.js";
