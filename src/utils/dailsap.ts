@@ -1,19 +1,19 @@
 export type Dailsap = {
   version: "0.1.0";
-  name: "dailsap";
+  name: "dailsap_store_contract";
   instructions: [
     {
       name: "createCollection";
       accounts: [
         {
-          name: "collection";
+          name: "authority";
           isMut: true;
           isSigner: true;
         },
         {
-          name: "authority";
+          name: "collection";
           isMut: true;
-          isSigner: true;
+          isSigner: false;
         },
         {
           name: "systemProgram";
@@ -22,6 +22,10 @@ export type Dailsap = {
         }
       ];
       args: [
+        {
+          name: "id";
+          type: "publicKey";
+        },
         {
           name: "name";
           type: "string";
@@ -73,6 +77,10 @@ export type Dailsap = {
         kind: "struct";
         fields: [
           {
+            name: "id";
+            type: "publicKey";
+          },
+          {
             name: "authority";
             type: "publicKey";
           },
@@ -91,6 +99,10 @@ export type Dailsap = {
           {
             name: "image";
             type: "string";
+          },
+          {
+            name: "bump";
+            type: "u8";
           }
         ];
       };

@@ -1,19 +1,19 @@
 {
   "version": "0.1.0",
-  "name": "merch3_store_contract",
+  "name": "dailsap_store_contract",
   "instructions": [
     {
       "name": "createCollection",
       "accounts": [
         {
-          "name": "collection",
+          "name": "authority",
           "isMut": true,
           "isSigner": true
         },
         {
-          "name": "authority",
+          "name": "collection",
           "isMut": true,
-          "isSigner": true
+          "isSigner": false
         },
         {
           "name": "systemProgram",
@@ -22,6 +22,10 @@
         }
       ],
       "args": [
+        {
+          "name": "id",
+          "type": "publicKey"
+        },
         {
           "name": "name",
           "type": "string"
@@ -73,6 +77,10 @@
         "kind": "struct",
         "fields": [
           {
+            "name": "id",
+            "type": "publicKey"
+          },
+          {
             "name": "authority",
             "type": "publicKey"
           },
@@ -91,6 +99,10 @@
           {
             "name": "image",
             "type": "string"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
           }
         ]
       }
@@ -136,5 +148,8 @@
       "name": "CollectionImageUrlTooLong",
       "msg": "The provided image uri should be 60 characters long maximum."
     }
-  ]
+  ],
+  "metadata": {
+    "address": "9UD25EfNoinZxLfqzEREwsjZ6WyDZokHd7QbowyxXmMA"
+  }
 }
