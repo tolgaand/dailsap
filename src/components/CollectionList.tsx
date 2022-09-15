@@ -3,8 +3,6 @@ import { useCollection } from "hooks/useCollection";
 export const CollectionList = () => {
   const { data, isLoading } = useCollection();
 
-  console.log(data);
-
   return (
     <div className="flex gap-10 justify-center w-full mt-4">
       {isLoading && <div>Loading...</div>}

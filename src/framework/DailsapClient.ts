@@ -46,8 +46,6 @@ export class DailsapClient {
   getCollections = async (): Promise<Collection[]> => {
     const prefetchedList = await this.getCollectionList();
 
-    // console.log(collectionList[0].pubkey.toBase58());
-
     const collectionList = await this.getCollectionDetails(
       prefetchedList.map((it) => it.pubkey)
     );
