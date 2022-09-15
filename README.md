@@ -33,5 +33,3 @@ Start the project
   //or
   yarn dev
 ```
-
-ß
