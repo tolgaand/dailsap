@@ -4,15 +4,18 @@ import { ACCOUNT_DISCRIMINATOR_SIZE, Program } from "@project-serum/anchor";
 import { PublicKey } from "@solana/web3.js";
 
 export type Collection = {
+  id: PublicKey;
   name: string;
   description: string;
-  image_uri: string;
+  image: string;
+  timestamp: anchor.BN;
+  authority: PublicKey;
 };
 
 export type Product = {
   name: string;
   description: string;
-  image_uri: string;
+  image: string;
 };
 
 export class DailsapClient {
@@ -24,6 +27,14 @@ export class DailsapClient {
     this.provider = program.provider as anchor.AnchorProvider;
   }
 
+  getCollectionList = async () => {
+    const prefetchedList = await this.provider.connection.getProgramAccounts(
+      this.program.programId
+    );
+
+    return prefetchedList;
+  };
+
   getCollectionDetails = async (collectionAddresses: PublicKey[]) => {
     const collections = (await this.program.account.collection.fetchMultiple(
       collectionAddresses
@@ -33,10 +44,14 @@ export class DailsapClient {
   };
 
   getCollections = async (): Promise<Collection[]> => {
-    const collectionList = (
-      await this.provider.connection.getProgramAccounts(this.program.programId)
-    ).map((it) => it.pubkey);
+    const prefetchedList = await this.getCollectionList();
 
-    return await this.getCollectionDetails(collectionList);
+    // console.log(collectionList[0].pubkey.toBase58());
+
+    const collectionList = await this.getCollectionDetails(
+      prefetchedList.map((it) => it.pubkey)
+    );
+
+    return collectionList;
   };
 }
