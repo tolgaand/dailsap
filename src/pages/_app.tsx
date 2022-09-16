@@ -1,5 +1,5 @@
-import "assets/styles/style.scss";
 import "@solana/wallet-adapter-react-ui/styles.css";
+import "assets/styles/style.scss";
 
 import type { AppProps } from "next/app";
 import {
