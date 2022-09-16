@@ -4,10 +4,10 @@ export const CollectionList = () => {
   const { data, isLoading } = useCollection();
 
   return (
-    <div className="flex gap-10 justify-center w-full mt-4">
+    <div className="flex flex-wrap gap-10 justify-center w-full mt-4">
       {isLoading && <div>Loading...</div>}
       {!isLoading &&
-        data?.map((collection, index) => (
+        data?.map((collection) => (
           <div
             className="rounded-lg shadow-lg bg-white max-w-sm"
             key={collection.id.toBase58()}
