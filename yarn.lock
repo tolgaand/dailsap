@@ -57,6 +57,11 @@
   resolved "https://registry.yarnpkg.com/@headlessui/react/-/react-1.7.2.tgz#e6a6a8d38342064a53182f1eb2bf6d9c1e53ba6a"
   integrity sha512-snLv2lxwsf2HNTOBNgHYdvoYZ3ChJE8QszPi1d/hl9js8KrFrUulTaQBfSyPbJP5BybVreWh9DxCgz9S0Z6hKQ==
 
+"@hookform/resolvers@^2.9.8":
+  version "2.9.8"
+  resolved "https://registry.yarnpkg.com/@hookform/resolvers/-/resolvers-2.9.8.tgz#9af51d15602f3c6e3249714712d8275564e65b72"
+  integrity sha512-iVVjH0USq+1TqDdGkWe2M1x7Wn5OFPgVRo7CbWFsXTqqXqCaZtZcnzJu+UhljCWbthFWxWGXKLGYUDPZ04oVvQ==
+
 "@humanwhocodes/config-array@^0.10.4":
   version "0.10.4"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.10.4.tgz#01e7366e57d2ad104feea63e72248f22015c520c"
@@ -2101,6 +2106,13 @@ concat-map@0.0.1:
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
   integrity sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==
 
+context@^3.0.4:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/context/-/context-3.0.4.tgz#23e95879c0a9381790baa34d895c55f80156de78"
+  integrity sha512-kjRlThxjda9o3L4lFXO7dOmxVXfO+v8q8A9dCyJxZ07XudYq6/TAFmF2bV5Plb4afi+oLSox2rXkJtI/nFB9Aw==
+  dependencies:
+    vest-utils "^0.0.4"
+
 copy-to-clipboard@^3.3.1:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/copy-to-clipboard/-/copy-to-clipboard-3.3.2.tgz#5b263ec2366224b100181dded7ce0579b340c107"
@@ -3624,6 +3636,14 @@ multiformats@^9.4.2:
   resolved "https://registry.yarnpkg.com/multiformats/-/multiformats-9.8.1.tgz#0e5f2910cf0c34f55adf0602f920775f9622552a"
   integrity sha512-Cu7NfUYtCV+WN7w59WsRRF138S+um4tTo11ScYsWbNgWyCEGOu8wID1e5eMJs91gFZ0I7afodkkdxCF8NGkqZQ==
 
+n4s@^4.3.2:
+  version "4.3.2"
+  resolved "https://registry.yarnpkg.com/n4s/-/n4s-4.3.2.tgz#8f94c6773c8c08618c5c0a07a1a50187fa8d3ead"
+  integrity sha512-eQ7L8dK/fWXtFG6zFgHmucHwekah4xpQMn9fCPqiv+Lk0LYANGiAiV9o6t9tKZrkXSkFeRJFHdLf5MeHx1CmoA==
+  dependencies:
+    context "^3.0.4"
+    vest-utils "^0.0.4"
+
 nan@^2.14.0, nan@^2.14.2:
   version "2.16.0"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.16.0.tgz#664f43e45460fb98faf00edca0bb0d7b8dce7916"
@@ -4183,6 +4203,11 @@ react-dom@18.2.0:
   dependencies:
     loose-envify "^1.1.0"
     scheduler "^0.23.0"
+
+react-hook-form@^7.35.0:
+  version "7.35.0"
+  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.35.0.tgz#b133de48fc84b1e62f9277ba79dfbacd9bb13dd3"
+  integrity sha512-9CYdOed+Itbiu5VMVxW0PK9mBR3f0gDGJcZEyUSm0eJbDymQ913TRs2gHcQZZmfTC+rtxyDFRuelMxx/+xwMcw==
 
 react-is@^16.13.1:
   version "16.13.1"
@@ -4875,6 +4900,33 @@ uuid@^8.3.2:
   version "8.3.2"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
   integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
+
+vast@^1.0.14:
+  version "1.0.14"
+  resolved "https://registry.yarnpkg.com/vast/-/vast-1.0.14.tgz#689d8366952a0553bdb58e67f8d6230a1e237bdf"
+  integrity sha512-w3iCRS3G+qOR/wkGpLz6b5/kdVQU3w/SHKZ8S9f0UTEwIZ3cE/IXuEZYZrFJkxL9AotyUk7b1WPxkA0cxq1fPA==
+  dependencies:
+    vest-utils "^0.0.3"
+
+vest-utils@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/vest-utils/-/vest-utils-0.0.3.tgz#a3be45f8876e7b2421477f5d2c23a4aed83b3155"
+  integrity sha512-ZVeNgF0CSf+35/jFd639savGiYiH8FO5PAOGKeUbyd6PwfiPkqm84XwAnErq5qcXoCZT3N9cw94YevduFTUTjg==
+
+vest-utils@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/vest-utils/-/vest-utils-0.0.4.tgz#c0fd0260c1772bc97732694da2c500c734cd25d3"
+  integrity sha512-H9YiK3yjg2CG+0KF5BzoFJYW38fFnfC+Z/5xDvJpRmGBe7J3X2Y29iHihgp1iQJl93JmEv/Kch8cjIQ+H3ilyg==
+
+vest@^4.6.6:
+  version "4.6.6"
+  resolved "https://registry.yarnpkg.com/vest/-/vest-4.6.6.tgz#1863c2f5e27e0b0265f690bcb5b5e805cf45820e"
+  integrity sha512-Xi3xC1soqd+/SgpS3IUTw3QogXzFxixgFR4FrgGRuWuz7JXKAdexy/0pfhzMlkDk61iOwCZ84FbM5WfUoulsFQ==
+  dependencies:
+    context "^3.0.4"
+    n4s "^4.3.2"
+    vast "^1.0.14"
+    vest-utils "^0.0.4"
 
 warning@^4.0.3:
   version "4.0.3"

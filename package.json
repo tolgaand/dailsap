@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.2",
+    "@hookform/resolvers": "^2.9.8",
     "@project-serum/anchor": "^0.25.0",
     "@solana-mobile/wallet-adapter-mobile": "^0.9.1",
     "@solana/wallet-adapter-base": "^0.9.16",
@@ -20,7 +21,9 @@
     "next": "12.3.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-query": "^3.39.2"
+    "react-hook-form": "^7.35.0",
+    "react-query": "^3.39.2",
+    "vest": "^4.6.6"
   },
   "devDependencies": {
     "@types/node": "18.7.18",
