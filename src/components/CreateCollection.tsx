@@ -62,7 +62,7 @@ export const CreateCollection = (props: CreateCollectionProps) => {
     <Transition.Root show={open} as={Fragment}>
       <Dialog
         as="div"
-        className="relative z-10"
+        className="relative z-30"
         initialFocus={cancelButtonRef}
         onClose={setOpen}
       >

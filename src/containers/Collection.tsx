@@ -5,7 +5,7 @@ import { DefaultLayout } from "./DefaultLayout";
 export const Collection = () => {
   return (
     <DefaultLayout>
-      <div className="container mx-auto">
+      <div className="container mx-auto ">
         <Header />
         <CollectionList />
       </div>
