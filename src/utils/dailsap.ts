@@ -68,6 +68,49 @@ export type Dailsap = {
           type: "string";
         }
       ];
+    },
+    {
+      name: "createProduct";
+      accounts: [
+        {
+          name: "authority";
+          isMut: true;
+          isSigner: true;
+        },
+        {
+          name: "product";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "collectionAccount";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "systemProgram";
+          isMut: false;
+          isSigner: false;
+        }
+      ];
+      args: [
+        {
+          name: "id";
+          type: "publicKey";
+        },
+        {
+          name: "name";
+          type: "string";
+        },
+        {
+          name: "description";
+          type: "string";
+        },
+        {
+          name: "imageUri";
+          type: "string";
+        }
+      ];
     }
   ];
   accounts: [
@@ -103,6 +146,10 @@ export type Dailsap = {
           {
             name: "bump";
             type: "u8";
+          },
+          {
+            name: "isPublished";
+            type: "bool";
           }
         ];
       };
@@ -113,8 +160,20 @@ export type Dailsap = {
         kind: "struct";
         fields: [
           {
+            name: "id";
+            type: "publicKey";
+          },
+          {
+            name: "authority";
+            type: "publicKey";
+          },
+          {
             name: "collection";
             type: "publicKey";
+          },
+          {
+            name: "timestamp";
+            type: "i64";
           },
           {
             name: "name";
@@ -127,6 +186,14 @@ export type Dailsap = {
           {
             name: "image";
             type: "string";
+          },
+          {
+            name: "bump";
+            type: "u8";
+          },
+          {
+            name: "isPublished";
+            type: "bool";
           }
         ];
       };

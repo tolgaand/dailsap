@@ -68,11 +68,54 @@
           "type": "string"
         }
       ]
+    },
+    {
+      "name": "createProduct",
+      "accounts": [
+        {
+          "name": "authority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "product",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "collectionAccount",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "id",
+          "type": "publicKey"
+        },
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "name": "imageUri",
+          "type": "string"
+        }
+      ]
     }
   ],
   "accounts": [
     {
-      "name": "Collection",
+      "name": "collection",
       "type": {
         "kind": "struct",
         "fields": [
@@ -103,18 +146,34 @@
           {
             "name": "bump",
             "type": "u8"
+          },
+          {
+            "name": "isPublished",
+            "type": "bool"
           }
         ]
       }
     },
     {
-      "name": "Product",
+      "name": "product",
       "type": {
         "kind": "struct",
         "fields": [
           {
+            "name": "id",
+            "type": "publicKey"
+          },
+          {
+            "name": "authority",
+            "type": "publicKey"
+          },
+          {
             "name": "collection",
             "type": "publicKey"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
           },
           {
             "name": "name",
@@ -127,6 +186,14 @@
           {
             "name": "image",
             "type": "string"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "isPublished",
+            "type": "bool"
           }
         ]
       }
@@ -148,8 +215,5 @@
       "name": "CollectionImageUrlTooLong",
       "msg": "The provided image uri should be 60 characters long maximum."
     }
-  ],
-  "metadata": {
-    "address": "9UD25EfNoinZxLfqzEREwsjZ6WyDZokHd7QbowyxXmMA"
-  }
+  ]
 }
