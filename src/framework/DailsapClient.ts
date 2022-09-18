@@ -25,6 +25,21 @@ export type CreateCollectionPayload = {
   image: string;
 };
 
+export type UpdateCollectionPayload = {
+  id: PublicKey;
+  name: string;
+  description: string;
+  image: string;
+};
+
+export type CreateProductPayload = {
+  id?: PublicKey;
+  name: string;
+  description: string;
+  image: string;
+  collection_account: PublicKey;
+};
+
 export class DailsapClient {
   public provider: anchor.AnchorProvider;
   public program: Program<Dailsap>;
@@ -83,6 +98,51 @@ export class DailsapClient {
       .createCollection(id, name, description, image)
       .accounts({
         collection: collectionPDA,
+        authority: this.provider.wallet.publicKey,
+        systemProgram: anchor.web3.SystemProgram.programId,
+      })
+      .rpc();
+  };
+
+  updateCollection = async (payload: UpdateCollectionPayload) => {
+    const { id, name, description, image } = payload;
+
+    const collectionPDA = await this.getCollectionPDA(id);
+
+    await this.program.methods
+      .updateCollection(name, description, image)
+      .accounts({
+        collectionAccount: collectionPDA,
+        // authority: this.provider.wallet.publicKey,
+      })
+      .rpc();
+  };
+
+  getProductPDA = async (id: PublicKey) => {
+    const [PDA, _] = await PublicKey.findProgramAddress(
+      [anchor.utils.bytes.utf8.encode("product"), id.toBuffer()],
+      this.program.programId
+    );
+
+    return PDA;
+  };
+
+  createProduct = async (payload: CreateProductPayload) => {
+    const {
+      id = Keypair.generate().publicKey,
+      name,
+      description,
+      image,
+      collection_account,
+    } = payload;
+
+    const productPDA = await this.getProductPDA(id);
+
+    await this.program.methods
+      .createProduct(id, name, description, image)
+      .accounts({
+        product: productPDA,
+        collectionAccount: collection_account,
         authority: this.provider.wallet.publicKey,
         systemProgram: anchor.web3.SystemProgram.programId,
       })
