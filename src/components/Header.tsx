@@ -317,7 +317,7 @@ export const Header = () => {
                 >
                   Sign in
                 </a> */}
-                {/* <span className="h-6 w-px bg-gray-200" aria-hidden="true" /> */}
+
                 <a
                   href="#"
                   className="text-sm font-medium text-gray-700 hover:text-gray-800"
@@ -325,6 +325,8 @@ export const Header = () => {
                 >
                   Create Collection
                 </a>
+                <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
+                <WalletConnectButton />
               </div>
               {/* 
               <div className="hidden lg:ml-8 lg:flex">
