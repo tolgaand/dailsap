@@ -66,6 +66,10 @@
         {
           "name": "imageUri",
           "type": "string"
+        },
+        {
+          "name": "isPublished",
+          "type": "bool"
         }
       ]
     },
@@ -115,7 +119,7 @@
   ],
   "accounts": [
     {
-      "name": "collection",
+      "name": "Collection",
       "type": {
         "kind": "struct",
         "fields": [
@@ -155,7 +159,7 @@
       }
     },
     {
-      "name": "product",
+      "name": "Product",
       "type": {
         "kind": "struct",
         "fields": [

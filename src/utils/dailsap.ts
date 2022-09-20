@@ -66,6 +66,10 @@ export type Dailsap = {
         {
           name: "imageUri";
           type: "string";
+        },
+        {
+          name: "isPublished";
+          type: "bool";
         }
       ];
     },
