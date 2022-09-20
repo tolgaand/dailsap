@@ -1,7 +1,7 @@
 import * as anchor from "@project-serum/anchor";
 import { Dailsap } from "utils/dailsap";
 import { ACCOUNT_DISCRIMINATOR_SIZE, Program } from "@project-serum/anchor";
-import { Keypair, PublicKey } from "@solana/web3.js";
+import { GetProgramAccountsFilter, Keypair, PublicKey } from "@solana/web3.js";
 
 export type Collection = {
   id: PublicKey;
@@ -10,12 +10,14 @@ export type Collection = {
   image: string;
   timestamp: anchor.BN;
   authority: PublicKey;
+  isPublished: boolean;
 };
 
 export type Product = {
   name: string;
   description: string;
   image: string;
+  is_published: boolean;
 };
 
 export type CreateCollectionPayload = {
@@ -30,6 +32,7 @@ export type UpdateCollectionPayload = {
   name: string;
   description: string;
   image: string;
+  is_published?: boolean;
 };
 
 export type CreateProductPayload = {
@@ -50,8 +53,15 @@ export class DailsapClient {
   }
 
   getCollectionList = async () => {
+    const filters: GetProgramAccountsFilter[] = [
+      {
+        memcmp: this.program.coder.accounts.memcmp("Collection"),
+      },
+    ];
+
     const prefetchedList = await this.provider.connection.getProgramAccounts(
-      this.program.programId
+      this.program.programId,
+      { filters }
     );
 
     return prefetchedList;
@@ -72,7 +82,12 @@ export class DailsapClient {
       prefetchedList.map((it) => it.pubkey)
     );
 
-    return collectionList;
+    //sort by timestamp
+    collectionList.sort((a, b) => {
+      return b.timestamp.toNumber() - a.timestamp.toNumber();
+    });
+
+    return collectionList.filter((it) => it.isPublished);
   };
 
   getCollectionPDA = async (id: PublicKey) => {
@@ -105,12 +120,12 @@ export class DailsapClient {
   };
 
   updateCollection = async (payload: UpdateCollectionPayload) => {
-    const { id, name, description, image } = payload;
+    const { id, name, description, image, is_published = true } = payload;
 
     const collectionPDA = await this.getCollectionPDA(id);
 
     await this.program.methods
-      .updateCollection(name, description, image)
+      .updateCollection(name, description, image, is_published)
       .accounts({
         collectionAccount: collectionPDA,
         // authority: this.provider.wallet.publicKey,

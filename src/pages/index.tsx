@@ -1,8 +1,8 @@
-import { Collection } from "containers/Collection";
+import { Home as _Home } from "containers/Home";
 import type { NextPage } from "next";
 
 const Home: NextPage = () => {
-  return <Collection />;
+  return <_Home />;
 };
 
 export default Home;

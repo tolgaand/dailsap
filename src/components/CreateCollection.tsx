@@ -6,14 +6,15 @@ import { WalletConnectButton } from "./WalletConnectButton";
 import { create, test, enforce } from "vest";
 import { vestResolver } from "@hookform/resolvers/vest";
 import { useForm } from "react-hook-form";
-import { CreateCollectionPayload } from "framework/DailsapClient";
-import { useCreateCollection } from "hooks/useCollections";
+import { Collection, CreateCollectionPayload } from "framework/DailsapClient";
+import { useCreateCollection, useUpdateCollection } from "hooks/useCollections";
 
 type FormValues = Omit<CreateCollectionPayload, "collectionId">;
 
 type CreateCollectionProps = {
   open: boolean;
   setOpen: (open: boolean) => void;
+  selectedCollection?: Collection;
 };
 
 const validationSuite = create((data: FormValues) => {
@@ -27,6 +28,7 @@ const validationSuite = create((data: FormValues) => {
 
   test("image", "Image url is required", () => {
     enforce(data.image).isNotBlank();
+    enforce(data.image).matches(/(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/);
   });
 });
 
@@ -40,21 +42,45 @@ export const CreateCollection = (props: CreateCollectionProps) => {
   } = useForm<FormValues>({ resolver: vestResolver(validationSuite) });
 
   const createCollection = useCreateCollection();
+  const updateCollection = useUpdateCollection();
 
-  const { open, setOpen } = props;
+  const { open, setOpen, selectedCollection } = props;
 
   const cancelButtonRef = useRef(null);
 
   useEffect(() => {
-    reset({
-      name: "",
-      description: "",
-      image: "",
-    });
+    if (selectedCollection)
+      reset({
+        name: selectedCollection.name,
+        description: selectedCollection.description,
+        image: selectedCollection.image,
+      });
+    else
+      reset({
+        name: "",
+        description: "",
+        image: "",
+      });
   }, [open, reset]);
 
-  const onSubmit = async (values: FormValues) => {
-    await createCollection.mutateAsync(values);
+  const onCreateCollection = async (values: FormValues) => {
+    !!selectedCollection
+      ? await updateCollection.mutateAsync({
+          id: selectedCollection.id,
+          ...values,
+        })
+      : await createCollection.mutateAsync(values);
+    setOpen(false);
+  };
+
+  const onDeleteCollection = async () => {
+    if (!selectedCollection) return;
+
+    await updateCollection.mutateAsync({
+      ...selectedCollection,
+      is_published: false,
+    });
+
     setOpen(false);
   };
 
@@ -110,7 +136,7 @@ export const CreateCollection = (props: CreateCollectionProps) => {
                           <input
                             type="text"
                             {...register("name")}
-                            placeholder="Please write your name and last name"
+                            placeholder="Please write your collection name"
                             className="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
                           />
                         </div>
@@ -125,7 +151,7 @@ export const CreateCollection = (props: CreateCollectionProps) => {
                           <textarea
                             rows={6}
                             {...register("description")}
-                            placeholder="Please write your address"
+                            placeholder="Please write description"
                             className="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500 resize-none"
                           />
                         </div>
@@ -140,7 +166,7 @@ export const CreateCollection = (props: CreateCollectionProps) => {
                           <input
                             type="url"
                             {...register("image")}
-                            placeholder="Please write your name and last name"
+                            placeholder="Image url"
                             className="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
                           />
                         </div>
@@ -150,14 +176,26 @@ export const CreateCollection = (props: CreateCollectionProps) => {
                   <div className="flex px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                     {!publicKey && <WalletConnectButton />}
                     {publicKey && (
-                      <button
-                        type="button"
-                        className="inline-flex w-full justify-center rounded-md border border-transparent bg-orange-500 hover:bg-orange-600 px-4 py-2 text-base font-medium text-white shadow-sm focus:outline-none focus:ring-2  focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm disabled:opacity-50 disabled:cursor-not-allowed"
-                        onClick={handleSubmit(onSubmit)}
-                        disabled={isSubmitting}
-                      >
-                        Create
-                      </button>
+                      <>
+                        <button
+                          type="button"
+                          className="inline-flex w-full justify-center rounded-md border border-transparent bg-indigo-500 hover:bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm focus:outline-none focus:ring-2  focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                          onClick={handleSubmit(onCreateCollection)}
+                          disabled={isSubmitting}
+                        >
+                          {selectedCollection ? "Update" : "Create"}
+                        </button>
+                        {!!selectedCollection && (
+                          <button
+                            type="button"
+                            className="inline-flex w-full justify-center rounded-md border border-transparent bg-red-500 hover:bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm focus:outline-none focus:ring-2  focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                            onClick={() => onDeleteCollection()}
+                            disabled={updateCollection.isLoading}
+                          >
+                            Delete
+                          </button>
+                        )}
+                      </>
                     )}
 
                     <button
